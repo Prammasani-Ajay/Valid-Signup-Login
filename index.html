@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+    <style>
+        #signupForm{
+            padding:3rem;
+            width: 20rem;
+            margin:auto;
+            margin-top: 150px;
+            display: none;
+            border-radius: 15px;
+            background-image: url("./Assets/white-seamless-weave-pattern-background.webp");
+            background-size: cover;
+        }
+        #loginForm{
+            padding:3rem;
+            width: 20rem;
+            margin:auto;
+            margin-top: 150px;
+            border-radius: 15px;
+            background-image: url("./Assets/white-seamless-weave-pattern-background.webp");
+            background-size: cover;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+        }
+        input{
+            padding: 3px;
+            outline: none;
+            border: 1px solid darkblue;
+            border-radius: 8px;
+            margin-top: 1rem;
+            width: 17rem;
+            height: 2rem;
+        }
+        input:last-child{
+            background-color: purple;
+            border: none;
+            border-radius: 10rem;
+            width: 6rem;
+            height: 35px;
+            color: white;
+        }
+        button{
+            transform: translateX(15rem);
+            background-color: purple;
+            border: none;
+            border-radius: 10rem;
+            width: 6rem;
+            height: 35px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <section id="signupForm">
+        <form action="" autocomplete="off" target="_self">
+            <input type="text" name="User_Nmae" placeholder="User Name">
+            <span></span>
+            <input type="email" name="Mail" placeholder="E-mail">
+            <span></span>
+            <input type="text" name="Mobile" placeholder="Mobile">
+            <span></span>
+            <input type="password" name="password" placeholder="Password">
+            <span></span>
+            <input type="submit" name="Submit" value="SUBMIT" id="submit">
+        </form>
+    </section>
+
+
+    <section id="loginForm">
+        <button>SIGN UP</button>
+        <form action="" autocomplete="off" target="_self">
+            <input type="text" name="User_Nmae" placeholder="User Name">
+            <span></span>
+            <input type="email" name="Mail" placeholder="E-mail">
+            <span></span>
+            <input type="text" name="Mobile" placeholder="Mobile">
+            <span></span>
+            <input type="password" name="password" placeholder="Password">
+            <span></span>
+            <input type="submit" name="Submit" value="LOGIN" id="login">
+        </form>
+    </section>
+
+
+   <!-- JavaScript code -->
+    <script>
+        const button = document.querySelector('button')
+
+        button.addEventListener('click',()=>{
+            document.getElementById('loginForm').style.display='none'
+            document.getElementById('signupForm').style.display='block'
+        })
+
+        //Error Message in Signup Form
+        const inputError = document.getElementsByTagName("span")
+        for(let i=0;i<inputError.length;i++){
+            inputError[i].setAttribute("style","font-size:13px;color:darkblue;height:5px")
+        }
+
+        const submit = document.getElementById('submit')
+        const login = document.getElementById('login')
+
+        // signupForm selecting by DOM
+
+        const signupUser = document.getElementsByTagName('input')[0];
+        const signupMail = document.getElementsByTagName('input')[1];
+        const signupMobile = document.getElementsByTagName('input')[2];
+        const signupPassword = document.getElementsByTagName('input')[3];
+
+        // LoginForm selecting by DOM
+
+        const loginUser =  document.getElementsByTagName('input')[5];
+        const loginMail =  document.getElementsByTagName('input')[6];
+        const loginMobile =  document.getElementsByTagName('input')[7];
+        const loginPassword =  document.getElementsByTagName('input')[8];
+
+
+        //signup Form Validation
+
+        submit.addEventListener("click",(event)=>{
+            const signupUserData = signupUser.value
+            const signupMailData = signupMail.value
+            const signupMobileData = signupMobile.value
+            const signupPasswordData = signupPassword.value
+
+            if(signupUserData.match(/^[A-Z][a-z]{3,15}[a-z]{0,10}$/)){
+                localStorage.setItem("signupUseraddress",signupUserData)
+            }else{
+                event.preventDefault()
+                // alert("enter wrong User Name")
+                inputError[0].innerHTML = "Required* (Must Start's A-Z & Allows Only Alphabits)"
+                signupUser.setAttribute("style","border:2px solid orange;")
+            }
+            if(signupMailData.match(/^[a-z0-9]{3,20}[@][a-z]{2,5}[.][a-z]{2,4}$/)){
+                localStorage.setItem("signupMailaddress",signupMailData)
+            }else{
+                event.preventDefault()
+                // alert("enter wrong Mail ID")
+                inputError[1].innerHTML = "Required* (Valid Mail-ID)"
+                signupMail.setAttribute("style","border:2px solid orange")
+            }
+            if(signupMobileData.match(/^[6,7,8,9][0-9]{9}$/)){
+                localStorage.setItem("signupMobileaddress",signupMobileData)
+            }else{
+                event.preventDefault()
+                // alert("enter wrong Mobile Number")
+                inputError[2].innerHTML = "Required Valid* (Must be 0-9)"
+                signupMobile.setAttribute("style","border:2px solid orange")
+            }
+            if(signupPasswordData.match(/^[A-Za-z0-9]{4,15}$/)){
+                localStorage.setItem("signupPasswordaddress",signupPasswordData)
+            }else{
+                event.preventDefault()
+                // alert("enter wrong Password")
+                inputError[3].innerHTML = "Required AlphaNumeric* (Max Length:15)"
+                signupPassword.setAttribute("style","border:2px solid orange")
+            }
+        })
+        
+        const userNameValid = localStorage.getItem("signupUseraddress")
+        const mailValid = localStorage.getItem("signupMailaddress")
+        const mobileValid = localStorage.getItem("signupMobileaddress")
+        const passwordValid = localStorage.getItem("signupPasswordaddress")
+
+        //Login Form Validation
+
+        login.addEventListener("click",(event)=>{
+            const loginUserData = loginUser.value
+            const loginMailData = loginMail.value
+            const loginMobileData = loginMobile.value
+            const loginPasswordData = loginPassword.value
+
+            if(userNameValid == loginUserData ){
+                
+            }else{
+                // alert("invalid UserName")
+                event.preventDefault()
+                inputError[4].innerHTML = "Invalid User Name"
+                loginUser.setAttribute("style","border:2px solid orange;")
+            }
+            if(mailValid == loginMailData ){
+              
+            }else{
+                // alert("invalid mailID")
+                event.preventDefault()
+                inputError[5].innerHTML = "Invalid Mail-ID"
+                loginMail.setAttribute("style","border:2px solid orange;")
+            }
+            if(mobileValid == loginMobileData ){
+               
+            }else{
+                // alert("invalid Mobile Number")
+                event.preventDefault()
+                inputError[6].innerHTML = "Invalid Mobile Number"
+                loginMobile.setAttribute("style","border:2px solid orange;")
+            }
+            if(passwordValid == loginPasswordData ){
+                
+            }else{
+                // alert("invalid Password")
+                event.preventDefault()
+                inputError[7].innerHTML = "Invalid Password"
+                loginPassword.setAttribute("style","border:2px solid orange;")
+            }
+
+            if((userNameValid == loginUserData) && (mailValid == loginMailData ) && (mobileValid == loginMobileData ) && (passwordValid == loginPasswordData )){
+                alert("Correct ! You are welcome")
+            }
+        })
+        
+    </script>
+</body>
+</html>
